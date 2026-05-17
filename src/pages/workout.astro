@@ -1,0 +1,169 @@
+---
+import StackLayout from '../layouts/StackLayout.astro';
+import { sampleWorkout } from '../data/content.ts';
+
+const w = sampleWorkout;
+const totalSets = w.exercises.reduce((n, ex) => n + ex.sets.length, 0);
+const totalReps = w.exercises.reduce(
+  (n, ex) => n + ex.sets.reduce((s, x) => s + (typeof x.reps === 'number' ? x.reps : 0), 0),
+  0,
+);
+const totalVolume = w.exercises.reduce(
+  (n, ex) =>
+    n +
+    ex.sets.reduce((s, x) => {
+      const load = typeof x.load === 'number' ? x.load : 0;
+      const reps = typeof x.reps === 'number' ? x.reps : 0;
+      return s + load * reps;
+    }, 0),
+  0,
+);
+---
+<StackLayout
+  title={`${w.title} — Stack`}
+  description={`Workout: ${w.title}. ${w.focus}. Sets, reps, and load for ${w.day}.`}
+  active="workout"
+>
+  {/* Workout header */}
+  <section class="block-border-b bg-stack-paper">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-14 grid lg:grid-cols-12 gap-8">
+      <div class="lg:col-span-8">
+        <p class="tag text-stack-red">{w.day}</p>
+        <h1 class="display text-6xl sm:text-7xl lg:text-8xl mt-3">{w.title}</h1>
+        <p class="mt-3 max-w-2xl text-stack-graphite">{w.focus}</p>
+        <div class="mt-6 flex flex-wrap gap-2">
+          {Array.from(new Set(w.exercises.map((e) => e.category))).map((c) => (
+            <span class="tag text-stack-graphite">{c}</span>
+          ))}
+        </div>
+      </div>
+
+      <div class="lg:col-span-4 grid grid-cols-2 gap-2">
+        <div class="bg-stack-ink text-stack-bone p-4 block-border">
+          <p class="tag text-stack-rebar-soft">Duration</p>
+          <p class="numeral text-5xl mt-1">{w.durationMin}<span class="text-xl text-stack-rebar-soft ml-1">m</span></p>
+        </div>
+        <div class="bg-stack-ink text-stack-bone p-4 block-border">
+          <p class="tag text-stack-rebar-soft">Target RPE</p>
+          <p class="numeral text-5xl mt-1">{w.rpe}</p>
+        </div>
+        <div class="bg-stack-bone p-4 block-border">
+          <p class="tag text-stack-graphite">Sets</p>
+          <p class="numeral text-5xl mt-1">{totalSets}</p>
+        </div>
+        <div class="bg-stack-bone p-4 block-border">
+          <p class="tag text-stack-graphite">Volume</p>
+          <p class="numeral text-5xl mt-1">{(totalVolume / 1000).toFixed(1)}<span class="text-xl ml-1">k</span></p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {/* Rest timer mock */}
+  <section class="bg-stack-graphite text-stack-bone">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 grid sm:grid-cols-3 gap-4 items-center">
+      <div class="sm:col-span-1">
+        <p class="tag text-stack-red-bright">REST TIMER</p>
+        <p class="display text-sm mt-1 text-stack-rebar-soft">Between sets — auto-starts on log</p>
+      </div>
+      <div class="sm:col-span-1 flex items-baseline gap-2 sm:justify-center">
+        <p class="numeral text-7xl tabular-nums tracking-tight">02:30</p>
+      </div>
+      <div class="sm:col-span-1 flex gap-2 sm:justify-end">
+        <button type="button" class="display bg-stack-bone text-stack-ink px-4 py-2 hover:bg-stack-red hover:text-stack-bone">Start</button>
+        <button type="button" class="display bg-transparent text-stack-bone px-4 py-2 border-2 border-stack-bone hover:bg-stack-red hover:border-stack-red">Skip</button>
+      </div>
+    </div>
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-6">
+      <div class="h-2 w-full bg-stack-ink overflow-hidden block-border">
+        <div class="h-full bg-stack-red" style="width: 62%"></div>
+      </div>
+      <p class="sr-only">Rest timer at 62 percent elapsed. Mock interface.</p>
+    </div>
+  </section>
+
+  {/* Exercise blocks */}
+  <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 space-y-12">
+    {w.exercises.map((ex, idx) => (
+      <article aria-labelledby={`ex-${ex.slug}`}>
+        <header class="flex items-end justify-between flex-wrap gap-3 mb-4">
+          <div>
+            <p class="tag text-stack-red">/{String(idx + 1).padStart(2, '0')} &mdash; {ex.category.toUpperCase()}</p>
+            <h2 id={`ex-${ex.slug}`} class="display text-4xl sm:text-5xl mt-2">{ex.name}</h2>
+          </div>
+          {ex.cue && (
+            <p class="text-sm text-stack-graphite max-w-md italic">&ldquo;{ex.cue}&rdquo;</p>
+          )}
+        </header>
+
+        <div class="block-border overflow-x-auto" tabindex="0" role="region" aria-label={`${ex.name} set log`}>
+          <table class="w-full text-left">
+            <caption class="sr-only">Set, reps, load, and rest for {ex.name}</caption>
+            <thead class="bg-stack-ink text-stack-bone">
+              <tr>
+                <th scope="col" class="display text-sm px-4 py-3 w-16">SET</th>
+                <th scope="col" class="display text-sm px-4 py-3">REPS</th>
+                <th scope="col" class="display text-sm px-4 py-3">LOAD</th>
+                <th scope="col" class="display text-sm px-4 py-3 hidden sm:table-cell">REST</th>
+                <th scope="col" class="display text-sm px-4 py-3 hidden md:table-cell">NOTE</th>
+              </tr>
+            </thead>
+            <tbody>
+              {ex.sets.map((s, sIdx) => {
+                const isWarmup = !!s.note?.toLowerCase().includes('warm');
+                const isPR = !!s.note?.toLowerCase().includes('pr');
+                return (
+                  <tr class={`${sIdx % 2 === 0 ? 'bg-stack-paper' : 'bg-stack-bone'} ${isPR ? 'ring-2 ring-stack-red ring-inset' : ''}`}>
+                    <td class="px-4 py-3 numeral text-2xl">{s.set}</td>
+                    <td class="px-4 py-3 numeral text-2xl">{s.reps}</td>
+                    <td class="px-4 py-3 numeral text-3xl">
+                      {typeof s.load === 'number' ? (
+                        <>
+                          {s.load}<span class="text-base text-stack-concrete ml-1">lb</span>
+                        </>
+                      ) : (
+                        <span>{s.load}</span>
+                      )}
+                    </td>
+                    <td class="px-4 py-3 numeral text-xl text-stack-graphite hidden sm:table-cell">{s.rest}</td>
+                    <td class="px-4 py-3 text-sm hidden md:table-cell">
+                      {isPR ? (
+                        <span class="tag text-stack-red">{s.note}</span>
+                      ) : isWarmup ? (
+                        <span class="tag text-stack-concrete">{s.note}</span>
+                      ) : (
+                        <span class="text-stack-concrete">{s.note ?? ''}</span>
+                      )}
+                    </td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
+        </div>
+      </article>
+    ))}
+  </section>
+
+  {/* Footer summary */}
+  <section class="bg-stack-bone block-border-t">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 grid sm:grid-cols-4 gap-4 text-center">
+      <div class="p-4">
+        <p class="tag text-stack-red">SETS</p>
+        <p class="numeral text-5xl mt-2">{totalSets}</p>
+      </div>
+      <div class="p-4">
+        <p class="tag text-stack-red">REPS</p>
+        <p class="numeral text-5xl mt-2">{totalReps}+</p>
+      </div>
+      <div class="p-4">
+        <p class="tag text-stack-red">VOLUME</p>
+        <p class="numeral text-5xl mt-2">{totalVolume.toLocaleString()}<span class="text-lg text-stack-concrete ml-1">lb</span></p>
+      </div>
+      <div class="p-4">
+        <p class="tag text-stack-red">TIME UNDER BAR</p>
+        <p class="numeral text-5xl mt-2">{w.durationMin}<span class="text-lg text-stack-concrete ml-1">min</span></p>
+      </div>
+    </div>
+  </section>
+</StackLayout>

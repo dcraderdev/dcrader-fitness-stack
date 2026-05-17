@@ -1,0 +1,107 @@
+---
+import StackLayout from '../layouts/StackLayout.astro';
+import { programs } from '../data/content.ts';
+---
+<StackLayout
+  title="Programs — Stack"
+  description="A library of strength, hypertrophy, and powerbuilding programs. Pick a block, follow the numbers, add weight."
+  active="programs"
+>
+  {/* Page header */}
+  <section class="block-border-b bg-stack-bone">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-14 sm:py-20">
+      <p class="tag text-stack-red">/PROGRAM LIBRARY</p>
+      <h1 class="display text-7xl sm:text-8xl lg:text-[10rem] mt-3 leading-[0.85]">
+        Pick a<br/>block. <span class="text-stack-red">Run it.</span>
+      </h1>
+      <p class="mt-6 max-w-2xl text-stack-graphite">
+        Programs are scaffolding. Each block lasts six to twelve weeks, with progress markers built in.
+        Pick the one that matches where you are today &mdash; not where you wish you were.
+      </p>
+    </div>
+  </section>
+
+  {/* Filter strip (visual only) */}
+  <section aria-hidden="true" class="bg-stack-graphite text-stack-bone block-border-b">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 flex gap-3 overflow-x-auto">
+      <span class="tag bg-stack-red text-stack-bone border-stack-red">ALL</span>
+      <span class="tag">STRENGTH</span>
+      <span class="tag">HYPERTROPHY</span>
+      <span class="tag">POWERBUILDING</span>
+      <span class="tag">PEAKING</span>
+      <span class="tag">GPP</span>
+    </div>
+  </section>
+
+  {/* Program grid */}
+  <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <ul class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+      {programs.map((p, i) => (
+        <li class="bg-stack-paper block-border flex flex-col">
+          <div class="p-6 flex-1">
+            <div class="flex items-baseline justify-between">
+              <p class="numeral text-3xl text-stack-red">/{String(i + 1).padStart(2, '0')}</p>
+              <span class="tag text-stack-graphite">{p.level.toUpperCase()}</span>
+            </div>
+            <h2 class="display text-4xl mt-3">{p.name}</h2>
+            <p class="mt-2 text-sm text-stack-graphite italic">{p.tagline}</p>
+            <p class="mt-4 text-sm text-stack-graphite">{p.description}</p>
+
+            <dl class="mt-5 grid grid-cols-3 gap-2 text-center bg-stack-bone p-3 block-border">
+              <div>
+                <dt class="tag text-stack-concrete">Weeks</dt>
+                <dd class="numeral text-2xl mt-1">{p.weeks}</dd>
+              </div>
+              <div>
+                <dt class="tag text-stack-concrete">Days/wk</dt>
+                <dd class="numeral text-2xl mt-1">{p.daysPerWeek}</dd>
+              </div>
+              <div>
+                <dt class="tag text-stack-concrete">Goal</dt>
+                <dd class="display text-sm mt-2">{p.goal}</dd>
+              </div>
+            </dl>
+
+            <div class="mt-5">
+              <p class="tag text-stack-concrete">Main lifts</p>
+              <div class="mt-2 flex flex-wrap gap-1.5">
+                {p.mainLifts.map((lift) => (
+                  <span class="tag text-stack-ink">{lift}</span>
+                ))}
+              </div>
+            </div>
+          </div>
+
+          <div class="block-border-t">
+            <a
+              href="/workout"
+              class="display block text-center bg-stack-ink text-stack-bone py-3 hover:bg-stack-red transition-colors"
+              aria-label={`Open a sample workout for ${p.name}`}
+            >
+              Preview a workout &rarr;
+            </a>
+          </div>
+        </li>
+      ))}
+    </ul>
+  </section>
+
+  {/* Bottom callout */}
+  <section class="bg-stack-ink text-stack-bone">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 grid lg:grid-cols-2 gap-8 items-center">
+      <div>
+        <p class="tag text-stack-red-bright">CAN'T DECIDE?</p>
+        <h2 class="display text-5xl sm:text-6xl mt-2">Start with Foundation 5.</h2>
+        <p class="mt-3 text-stack-rebar-soft max-w-xl">
+          If you're new under the bar, the answer is almost always linear progression on the big three.
+          Twelve weeks. Three days. Add five pounds every session until you can't &mdash; then we wave.
+        </p>
+      </div>
+      <div>
+        <a href="/workout" class="display text-xl bg-stack-red text-stack-bone px-6 py-4 inline-block block-border hover:bg-stack-bone hover:text-stack-ink transition-colors">
+          See a sample workout &rarr;
+        </a>
+      </div>
+    </div>
+  </section>
+</StackLayout>

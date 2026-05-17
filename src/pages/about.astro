@@ -1,0 +1,144 @@
+---
+import StackLayout from '../layouts/StackLayout.astro';
+
+const a11yDate = '2026-05-17';
+---
+<StackLayout
+  title="About — Stack"
+  description="About Stack: a minimal-brutalist workout tracker concept by dcrader.dev. Includes accessibility statement."
+  active="about"
+>
+  {/* Hero */}
+  <section class="block-border-b bg-stack-bone">
+    <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-14 sm:py-20">
+      <p class="tag text-stack-red">/ABOUT</p>
+      <h1 class="display text-7xl sm:text-8xl lg:text-9xl mt-3 leading-[0.85]">
+        Sets, reps,<br/>
+        load &mdash; <span class="text-stack-red">that's it.</span>
+      </h1>
+      <p class="mt-6 max-w-2xl text-stack-graphite text-lg">
+        Stack is a concept site for a workout tracker that does one thing: log what you lifted.
+        No social feed, no streak shaming, no AI form coach.
+        Just a clean grid of sets, reps, and load &mdash; and the numbers going up over time.
+      </p>
+    </div>
+  </section>
+
+  {/* Principles */}
+  <section class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+    <h2 class="tag text-stack-red">/PRINCIPLES</h2>
+    <ol class="mt-6 space-y-6">
+      <li class="grid sm:grid-cols-[3rem_1fr] gap-4">
+        <span class="numeral text-5xl text-stack-red">01</span>
+        <div>
+          <h3 class="display text-3xl">The bar is the source of truth.</h3>
+          <p class="mt-2 text-stack-graphite">No estimated calories, no recovery scores, no &ldquo;readiness&rdquo; nonsense. If you put it on the bar and stood up with it, that's the data.</p>
+        </div>
+      </li>
+      <li class="grid sm:grid-cols-[3rem_1fr] gap-4">
+        <span class="numeral text-5xl text-stack-red">02</span>
+        <div>
+          <h3 class="display text-3xl">A workout is a list. Treat it like one.</h3>
+          <p class="mt-2 text-stack-graphite">Vertical grid, big numerals, no clever animations. The app should disappear between sets, not perform for you.</p>
+        </div>
+      </li>
+      <li class="grid sm:grid-cols-[3rem_1fr] gap-4">
+        <span class="numeral text-5xl text-stack-red">03</span>
+        <div>
+          <h3 class="display text-3xl">Build the block, then run the block.</h3>
+          <p class="mt-2 text-stack-graphite">Programs are blocks. Six to twelve weeks. You don't redesign your training plan in the middle of a set &mdash; you finish the block and decide afterwards.</p>
+        </div>
+      </li>
+    </ol>
+  </section>
+
+  {/* Stack vs. the rest */}
+  <section class="bg-stack-paper block-border-t block-border-b">
+    <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+      <h2 class="tag text-stack-red">/WHAT IT ISN'T</h2>
+      <div class="mt-6 grid sm:grid-cols-2 gap-0 block-border">
+        <div class="p-6 sm:border-r-2 border-b-2 sm:border-b-0 border-stack-ink">
+          <p class="display text-2xl text-stack-red">NOT</p>
+          <ul class="mt-3 space-y-2 text-stack-graphite">
+            <li>&times; A social network for your gym</li>
+            <li>&times; An AI form coach</li>
+            <li>&times; A streak counter</li>
+            <li>&times; A subscription with three tiers</li>
+            <li>&times; A wearable companion app</li>
+          </ul>
+        </div>
+        <div class="p-6 bg-stack-bone">
+          <p class="display text-2xl">IS</p>
+          <ul class="mt-3 space-y-2 text-stack-graphite">
+            <li>&check; A logbook that opens fast</li>
+            <li>&check; Sets, reps, and load in a grid</li>
+            <li>&check; A rest timer that doesn't nag</li>
+            <li>&check; PR tracking with e1RM</li>
+            <li>&check; A weekly plan you can actually read</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {/* Accessibility */}
+  <section id="accessibility" class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+    <p class="tag text-stack-red">/ACCESSIBILITY STATEMENT</p>
+    <h2 class="display text-5xl sm:text-6xl mt-2">Built to be read.</h2>
+
+    <div class="mt-6 space-y-4 text-stack-graphite max-w-3xl">
+      <p>
+        Stack is committed to meeting <strong>WCAG 2.1 Level AA</strong> as a minimum standard.
+        That means high-contrast text, visible focus rings, semantic markup, keyboard-navigable
+        interactions, and large hit targets.
+      </p>
+      <p>
+        The site uses condensed display type for headings and a neutral sans for body copy.
+        All numerals are tabular so loads and rep counts line up cleanly when scanned.
+        Color is never the only signal &mdash; PR rows have both a red border <em>and</em> a label.
+      </p>
+      <h3 class="display text-2xl text-stack-ink mt-6">Found a barrier?</h3>
+      <p>
+        If anything on this site is hard to read, hear, or operate, please tell us.
+        We treat accessibility bugs the same as functional bugs &mdash; they get fixed,
+        not deprioritized.
+      </p>
+      <ul class="mt-2 space-y-1">
+        <li>
+          <span class="tag text-stack-concrete mr-2">EMAIL</span>
+          <a class="underline hover:text-stack-red" href="mailto:accessibility@stack.dcrader.dev">
+            accessibility@stack.dcrader.dev
+          </a>
+        </li>
+        <li>
+          <span class="tag text-stack-concrete mr-2">UPDATED</span>
+          <time datetime={a11yDate} class="numeral">{a11yDate}</time>
+        </li>
+      </ul>
+
+      <h3 class="display text-2xl text-stack-ink mt-6">Known limitations</h3>
+      <ul class="list-disc pl-5 space-y-1">
+        <li>This is a concept/demo site. The rest-timer controls are visual mocks &mdash; they don't
+          run a real timer yet. Once interactive, they'll include audible and visual cues plus a
+          <code>prefers-reduced-motion</code> path.</li>
+        <li>Some marketing copy uses tight tracking on extra-large display type. This is intentional
+          for the brutalist aesthetic, but if it harms readability for you, please report it.</li>
+      </ul>
+    </div>
+  </section>
+
+  {/* Closing */}
+  <section class="bg-stack-ink text-stack-bone">
+    <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+      <p class="tag text-stack-red-bright">/CREDITS</p>
+      <h2 class="display text-4xl sm:text-5xl mt-2 max-w-3xl">
+        A concept by <a href="https://dcrader.dev" class="underline hover:text-stack-red-bright">dcrader.dev</a> &mdash;
+        part of a series of focused, single-purpose tools.
+      </h2>
+      <p class="mt-4 text-stack-rebar-soft max-w-2xl">
+        Built with Astro &amp; Tailwind. Deployed on Vercel. No tracking, no third-party scripts,
+        no &ldquo;cookie consent&rdquo; banner because there's nothing to consent to.
+      </p>
+    </div>
+  </section>
+</StackLayout>

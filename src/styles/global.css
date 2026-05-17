@@ -1,0 +1,113 @@
+@import "tailwindcss";
+
+@theme {
+  --color-stack-bone: #f5f4f0;
+  --color-stack-paper: #fafaf7;
+  --color-stack-ink: #0a0a0a;
+  --color-stack-graphite: #1a1a1a;
+  --color-stack-concrete: #6b6b66;
+  --color-stack-rebar: #d4d3cd;
+  --color-stack-rebar-soft: #b8b7b1;
+  --color-stack-rebar-dim: #9a9994;
+  --color-stack-red: #c5121d;
+  --color-stack-red-bright: #ff5260;
+  --color-stack-red-deep: #a8121c;
+
+  --font-display: "Oswald", "Arial Narrow", "Helvetica Neue Condensed", "Impact", sans-serif;
+  --font-body: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, "SF Mono", Menlo, monospace;
+}
+
+html {
+  scroll-behavior: smooth;
+  background: var(--color-stack-bone);
+  color: var(--color-stack-ink);
+}
+
+body {
+  font-family: var(--font-body);
+  background: var(--color-stack-bone);
+  color: var(--color-stack-ink);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+::selection {
+  background: var(--color-stack-red);
+  color: #fff;
+}
+
+/* Brutalist focus ring — high contrast, blocky */
+*:focus-visible {
+  outline: 3px solid var(--color-stack-red);
+  outline-offset: 2px;
+}
+
+/* Display type defaults */
+.display {
+  font-family: var(--font-display);
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  line-height: 0.92;
+  text-transform: uppercase;
+}
+
+.numeral {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.02em;
+}
+
+/* Concrete texture overlay — subtle grain */
+.concrete {
+  background-color: var(--color-stack-rebar);
+  background-image:
+    radial-gradient(rgba(10,10,10,0.05) 1px, transparent 1px),
+    radial-gradient(rgba(10,10,10,0.03) 1px, transparent 1px);
+  background-size: 4px 4px, 7px 7px;
+  background-position: 0 0, 2px 2px;
+}
+
+/* Thick block borders */
+.block-border {
+  border: 2px solid var(--color-stack-ink);
+}
+.block-border-b {
+  border-bottom: 2px solid var(--color-stack-ink);
+}
+.block-border-t {
+  border-top: 2px solid var(--color-stack-ink);
+}
+
+/* Marquee-style tag */
+.tag {
+  display: inline-block;
+  padding: 0.15rem 0.5rem;
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  border: 1.5px solid currentColor;
+}
+
+/* Give text descendants of dark sections an explicit local background.
+   Real-world contrast is unchanged (parent bg matches), but this lets
+   axe-core's contrast checker find an opaque ancestor without falling
+   back to pixel-sampling, which is unreliable for offscreen content. */
+.bg-stack-graphite :where(p, span, a, li, dt, dd, time, em, strong, code, h1, h2, h3, h4, button):not([class*="bg-"]) {
+  background-color: var(--color-stack-graphite);
+}
+.bg-stack-ink :where(p, span, a, li, dt, dd, time, em, strong, code, h1, h2, h3, h4, button):not([class*="bg-"]) {
+  background-color: var(--color-stack-ink);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
