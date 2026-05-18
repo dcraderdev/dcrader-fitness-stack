@@ -5,9 +5,12 @@ export interface Props {
   title: string;
   description: string;
   active?: 'home' | 'programs' | 'workout' | 'about';
+  image?: string;
 }
 
-const { title, description, active } = Astro.props;
+const { title, description, active, image = '/og-image.png' } = Astro.props;
+const canonicalURL = new URL(Astro.url.pathname, Astro.site).toString();
+const ogImage = new URL(image, Astro.site).toString();
 
 const nav = [
   { href: '/', label: 'Home', key: 'home' },
@@ -24,7 +27,20 @@ const nav = [
     <meta name="description" content={description} />
     <meta name="theme-color" content="#0a0a0a" />
     <title>{title}</title>
+    <link rel="canonical" href={canonicalURL} />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:url" content={canonicalURL} />
+    <meta property="og:site_name" content="Stack" />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImage} />
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -114,7 +130,12 @@ const nav = [
               </a>
             </li>
             <li class="text-stack-rebar-dim text-xs pt-2">
-              &copy; {new Date().getFullYear()} Stack. Concept site by dcrader.dev.
+              &copy; {new Date().getFullYear()} Stack. Built by
+              {' '}<a
+                href="https://dcrader.dev"
+                class="underline hover:text-stack-red-bright"
+                rel="noopener"
+              >Donovan Crader &middot; dcrader.dev</a>.
             </li>
           </ul>
         </div>
