@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://dcrader-fitness-stack.vercel.app/sitemap-index.xml
