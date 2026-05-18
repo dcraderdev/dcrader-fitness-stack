@@ -40,6 +40,10 @@ const nav = [
 
     <slot name="head" />
     <script src="/template-topheader.js" defer></script>
+    <style>
+      /* Offset for portfolio bar (#dcrader-th, 34px fixed top:0) injected by template-topheader.js */
+      body { padding-top: 34px; }
+    </style>
   </head>
   <body class="min-h-screen flex flex-col bg-stack-bone text-stack-ink">
     <a
