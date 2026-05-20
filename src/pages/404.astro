@@ -1,0 +1,41 @@
+---
+import StackLayout from '../layouts/StackLayout.astro';
+---
+<StackLayout
+  title="404 — Page not found · Stack"
+  description="That page is missing from the rack. Head back to the home barbell."
+>
+  <section class="block-border-b bg-stack-bone">
+    <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-24 sm:py-32 text-center">
+      <p class="tag text-stack-red">ERROR · MISLOADED PLATE</p>
+
+      <h1 class="display leading-[0.85] mt-4 text-[28vw] sm:text-[16rem] lg:text-[18rem] text-stack-red">
+        404
+      </h1>
+
+      <p class="display text-4xl sm:text-5xl mt-4">
+        Page not found.
+      </p>
+
+      <p class="mt-6 max-w-xl mx-auto text-base sm:text-lg text-stack-graphite">
+        Looks like this rep didn&rsquo;t count. The page you&rsquo;re looking for isn&rsquo;t
+        on the rack. Re-rack, reset, and pull from the top.
+      </p>
+
+      <div class="mt-10 flex flex-wrap gap-3 justify-center">
+        <a
+          href="/"
+          class="display text-lg bg-stack-ink text-stack-bone px-5 py-3 hover:bg-stack-red transition-colors block-border"
+        >
+          &larr; Back to home
+        </a>
+        <a
+          href="/workout"
+          class="display text-lg bg-transparent text-stack-ink px-5 py-3 hover:bg-stack-ink hover:text-stack-bone transition-colors block-border"
+        >
+          See a workout
+        </a>
+      </div>
+    </div>
+  </section>
+</StackLayout>
