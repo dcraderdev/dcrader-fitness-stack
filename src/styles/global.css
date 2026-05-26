@@ -8,7 +8,7 @@
   --color-stack-concrete: #6b6b66;
   --color-stack-rebar: #d4d3cd;
   --color-stack-rebar-soft: #b8b7b1;
-  --color-stack-rebar-dim: #9a9994;
+  --color-stack-rebar-dim: #a8a7a2;
   --color-stack-red: #c5121d;
   --color-stack-red-bright: #ff5260;
   --color-stack-red-deep: #a8121c;
@@ -41,6 +41,17 @@ body {
 *:focus-visible {
   outline: 3px solid var(--color-stack-red);
   outline-offset: 2px;
+}
+
+/* On dark backgrounds, use the brighter red so the ring stays visible. */
+.bg-stack-ink :focus-visible,
+.bg-stack-graphite :focus-visible {
+  outline-color: var(--color-stack-red-bright);
+}
+
+/* Smooth color changes on interactive surfaces. */
+a, button {
+  transition: color 0.15s ease, background-color 0.15s ease, border-color 0.15s ease;
 }
 
 /* Display type defaults */
