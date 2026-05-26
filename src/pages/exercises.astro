@@ -1,0 +1,351 @@
+---
+import StackLayout from '../layouts/StackLayout.astro';
+
+type Lift = {
+  slug: string;
+  name: string;
+  category: 'Squat' | 'Press' | 'Pull' | 'Hinge' | 'Accessory' | 'Conditioning';
+  primary: string;
+  setup: string;
+  execution: string;
+  faults: string[];
+  programming: string;
+  cue: string;
+};
+
+const lifts: Lift[] = [
+  // SQUAT
+  {
+    slug: 'back-squat',
+    name: 'Back Squat',
+    category: 'Squat',
+    primary: 'Quads · Glutes · Spinal erectors · Adductors',
+    setup: 'Bar across the rear delts, just above the spine of the scapula. Hands slightly wider than shoulders, elbows tucked under. Walk it out in three steps, feet just outside hip width, toes flared 10–20 degrees.',
+    execution: 'Brace before the descent. Break at hips and knees simultaneously. Lower until the crease of the hip drops below the top of the knee. Drive through the middle of the foot, hips and chest rising together.',
+    faults: ['Knee cave at the bottom — fix with band feedback or pause squats', 'Forward bow on the way up — load is too heavy or core is undertrained', 'Heel rise — ankle mobility or stance too narrow'],
+    programming: 'Twice a week for most lifters. One heavy day (1–5 rep range) and one volume day (8–12). Pause variations and tempo work patch leaks faster than more sets.',
+    cue: 'Brace, break at the hips, drive the floor away.',
+  },
+  {
+    slug: 'front-squat',
+    name: 'Front Squat',
+    category: 'Squat',
+    primary: 'Quads · Upper back · Core',
+    setup: 'Bar across the front delts, fingertips under the bar, elbows high. If wrist or shoulder mobility limits the front rack, cross-arm grip is acceptable but harder to keep tight.',
+    execution: 'Elbows lead. Descend straight down — any forward lean dumps the bar. Hit depth, then drive the elbows back up first; the bar follows.',
+    faults: ['Elbows dropping under load (lost rack)', 'Knees collapsing on the ascent', 'Hyperextending at the top — soft lockout protects the lower back'],
+    programming: 'Excellent as the primary squat for athletes whose back rounds at depth. Sets of 3 to 6 for strength; sets of 8 for hypertrophy.',
+    cue: 'Elbows up, lead with the chest.',
+  },
+
+  // PRESS
+  {
+    slug: 'bench-press',
+    name: 'Bench Press',
+    category: 'Press',
+    primary: 'Pecs · Triceps · Anterior delts',
+    setup: 'Eyes under the bar. Pull the shoulder blades down and together, plant the feet, slight arch through the thoracic spine. Grip just outside shoulder width — find where the forearm runs vertical at the bottom.',
+    execution: 'Unrack with straight arms. Lower the bar to the lower sternum with control, elbows tracking at about a 60-degree angle from the torso. Touch the chest, then drive the floor away as you press.',
+    faults: ['Flared elbows — recipe for shoulder pain', 'Bouncing off the chest', 'Hips lifting off the bench at lockout (failed core brace)'],
+    programming: 'Two to three sessions per week. Top sets at RPE 7–8 build the most muscle over the long run; chasing one-rep maxes weekly is a great way to plateau.',
+    cue: 'Bend the bar, drive the floor.',
+  },
+  {
+    slug: 'overhead-press',
+    name: 'Overhead Press',
+    category: 'Press',
+    primary: 'Delts · Triceps · Upper traps · Core',
+    setup: 'Bar in the front rack, hands just outside shoulders. Glutes squeezed, ribs down, weight in the heels.',
+    execution: 'Pull the chin back to clear a path for the bar, press straight up, then push the head through at lockout so the bar finishes over the mid-foot. No leg drive — that turns this into a push press.',
+    faults: ['Lower-back hyperextension (loss of brace)', 'Pressing the bar forward instead of up', 'Soft lockout — the rep is not finished until the head is through the window'],
+    programming: 'Once a week heavy, once a week as a back-off lift after bench. The OHP responds slowly; expect three to five pounds per cycle, not per week.',
+    cue: 'Move the head out of the way, then move it back.',
+  },
+  {
+    slug: 'incline-db-press',
+    name: 'Incline Dumbbell Press',
+    category: 'Press',
+    primary: 'Upper pecs · Anterior delts · Triceps',
+    setup: 'Bench at 30 degrees — anything steeper turns this into a shoulder press. Dumbbells at the shoulders, palms facing forward at the bottom.',
+    execution: 'Press the dumbbells up and slightly together. Pause briefly at the top, then lower under control until the upper arm is just past parallel to the floor.',
+    faults: ['Bench too steep, recruiting front delts at the expense of upper chest', 'Dumbbells clanking — that means the brace broke at lockout', 'Bouncing the bottom of the rep'],
+    programming: 'A volume staple. 3–4 sets of 8–12 once or twice a week. Smaller weight, more reps; this lift rewards the squeeze, not the load.',
+    cue: 'Press up and in.',
+  },
+
+  // PULL
+  {
+    slug: 'pull-up',
+    name: 'Pull-Up',
+    category: 'Pull',
+    primary: 'Lats · Biceps · Mid-back · Forearms',
+    setup: 'Full grip, hands just outside shoulder width. Hang with active shoulders — packed down, not loose.',
+    execution: 'Initiate by pulling the elbows down toward the ribs, not by curling the bar to the chin. Drive the chest to the bar. Lower under control for at least a two-second count.',
+    faults: ['Kipping into a strict set', 'Half reps from the top', 'Loose hang at the bottom — train the scap pull-up if this is leaking'],
+    programming: 'Greasing the groove works here. Three to five clean reps every time you walk past a bar will build a double-digit max faster than dedicated strength sessions.',
+    cue: 'Pull the elbows to the floor.',
+  },
+  {
+    slug: 'barbell-row',
+    name: 'Barbell Row',
+    category: 'Pull',
+    primary: 'Lats · Rhomboids · Rear delts · Erectors',
+    setup: 'Bar over mid-foot. Hinge to a torso angle around 45 degrees, grip just outside shoulders, knees slightly bent. Brace as if for a deadlift.',
+    execution: 'Pull the bar to the lower sternum, elbows tracking back, not flared. Hold a brief contraction at the top, then lower the bar back to the lockout position — not to the floor.',
+    faults: ['Torso rising on every rep (cheating the load)', 'Bar pulled to the upper chest, dumping load to the rear delts', 'Lower-back rounding at the start of the pull'],
+    programming: 'Twice a week, in the 5–8 rep range. A great accessory for the deadlift — the brace and hinge are nearly identical.',
+    cue: 'Drive the elbows back, not up.',
+  },
+  {
+    slug: 'chest-supported-row',
+    name: 'Chest-Supported Row',
+    category: 'Pull',
+    primary: 'Mid-back · Lats · Rear delts',
+    setup: 'Bench at 30–45 degrees, chest pressed firmly against the pad. Dumbbells hanging at full reach below the shoulders.',
+    execution: 'Pull the elbows up and back. Squeeze the shoulder blades together at the top for a one-second count. Lower under control to a full stretch.',
+    faults: ['Chest lifting off the pad — that is the whole point of the exercise', 'Shrugging the weight rather than rowing it', 'Cutting the bottom range short'],
+    programming: 'Best programmed after the barbell row, in the 10–15 rep range. The forced isolation builds the mid-back faster than freestanding rows.',
+    cue: 'Chest stays glued. Elbows lead.',
+  },
+
+  // HINGE
+  {
+    slug: 'deadlift',
+    name: 'Conventional Deadlift',
+    category: 'Hinge',
+    primary: 'Hamstrings · Glutes · Erectors · Lats · Grip',
+    setup: 'Bar over mid-foot, an inch from the shins. Hands just outside the knees. Hips higher than knees, shoulders just in front of the bar. Wedge the chest up against the bar before the pull begins.',
+    execution: 'Push the floor away — do not yank. Bar travels in a straight vertical line, brushing the legs the entire way up. Lock out with the hips, not by leaning back.',
+    faults: ['Hips shooting up first (the squat-up-then-pull error)', 'Bar drifting forward in the mid-range', 'Hyperextended lockout — a stacked position is the goal, not a tilt'],
+    programming: 'Once a week heavy is enough for most lifters. The recovery cost is high and the strength carry-over from rows, RDLs, and good mornings is substantial.',
+    cue: 'Press the floor down.',
+  },
+  {
+    slug: 'rdl',
+    name: 'Romanian Deadlift',
+    category: 'Hinge',
+    primary: 'Hamstrings · Glutes · Erectors',
+    setup: 'Take the bar from the rack or off a low block. Soft knees, neutral spine, bar against the thighs.',
+    execution: 'Push the hips back as if reaching for a wall behind you. Slide the bar down the legs until you feel a strong hamstring stretch — usually mid-shin to just below the kneecap. Drive the hips forward to return.',
+    faults: ['Squatting it down (knees breaking instead of hips)', 'Bar drifting away from the legs', 'Going too low and rounding the lower back'],
+    programming: 'Twice a week in the 6–10 rep range. A staple for anyone whose deadlift stalls in the bottom — the RDL teaches the hinge pattern under stretch.',
+    cue: 'Hips back, bar close.',
+  },
+  {
+    slug: 'hip-thrust',
+    name: 'Hip Thrust',
+    category: 'Hinge',
+    primary: 'Glutes · Hamstrings',
+    setup: 'Upper back on a bench, bar across the hips with a pad. Feet flat, shins vertical at the top of the rep.',
+    execution: 'Drive the hips up by squeezing the glutes — not by pushing through the toes or arching the lower back. Pause for one second at full lockout with ribs down.',
+    faults: ['Hyperextending the lumbar spine at the top', 'Shins angled forward, putting load into the quads', 'Bouncing reps off the floor'],
+    programming: 'Once or twice a week, in the 8–15 rep range. Best programmed at the end of a lower-body session — never before a heavy squat.',
+    cue: 'Ribs down. Squeeze the cheeks.',
+  },
+
+  // ACCESSORY
+  {
+    slug: 'bulgarian-split-squat',
+    name: 'Bulgarian Split Squat',
+    category: 'Accessory',
+    primary: 'Quads · Glutes · Adductors · Hip stabilizers',
+    setup: 'Rear foot on a bench, front foot a long stride out. Dumbbells at the sides, or a single goblet for less load.',
+    execution: 'Lower straight down, front knee tracking over the toes. The rear leg is a kickstand, not a driver. Drive through the entire front foot to return.',
+    faults: ['Front foot too close to the bench (excess knee shear)', 'Pushing off the rear toes', 'Leaning the torso forward to shift load off the working leg'],
+    programming: 'A unilateral cornerstone. 3 sets of 8–12 per leg, once or twice a week. Single-leg work fixes asymmetries that a barbell will let you hide for years.',
+    cue: 'Front-foot torque. Ribs down.',
+  },
+  {
+    slug: 'walking-lunge',
+    name: 'Walking Lunge',
+    category: 'Accessory',
+    primary: 'Quads · Glutes · Hamstrings · Conditioning',
+    setup: 'Dumbbells at the sides or front rack. Long enough lane to take 10–20 steps.',
+    execution: 'Step out, lower the back knee toward the floor without slamming it, then drive through the front heel into the next step. Continuous motion, no pause at the top.',
+    faults: ['Steps too short (turns it into a squat)', 'Slamming the back knee', 'Torso pitching forward over the front leg'],
+    programming: 'A brutal conditioning-and-strength hybrid. Once a week as a finisher; 4 sets of 20–30 steps.',
+    cue: 'Long step. Quiet knee.',
+  },
+  {
+    slug: 'farmers-carry',
+    name: 'Farmer\'s Carry',
+    category: 'Accessory',
+    primary: 'Grip · Traps · Core · Whole posterior chain',
+    setup: 'Pick up the heaviest dumbbells or trap-bar load you can hold with a vertical posture. Stand tall.',
+    execution: 'Walk in a straight line for 30 to 60 seconds. Ribs down, shoulders packed, breathe through the nose. The hands and the brace fail first; the legs are along for the ride.',
+    faults: ['Shrugging the shoulders up to the ears', 'Lower back arching as the carry gets long', 'Quick choppy steps — the carry should look slow and heavy'],
+    programming: 'Twice a week at the end of a session. Two or three carries per session, going for distance or time. One of the best investments per minute in the entire library.',
+    cue: 'Stand tall. Walk slow.',
+  },
+
+  // CONDITIONING
+  {
+    slug: 'sled-push',
+    name: 'Sled Push',
+    category: 'Conditioning',
+    primary: 'Quads · Calves · Lungs',
+    setup: 'Hands on the upright posts, body angled around 45 degrees. Load enough that a single push run takes 15 to 25 seconds.',
+    execution: 'Drive through the balls of the feet, alternating long, hard strides. Stay low. The sled should not stop until the run is over.',
+    faults: ['Standing up tall (loses the leg drive)', 'Load too light — sprinting drills a different system', 'Slowing down at the end instead of finishing the run'],
+    programming: 'Once or twice a week, 6–10 runs with a full minute of rest between. The single best conditioning tool a heavy lifter can have, because it builds without breaking down the joints.',
+    cue: 'Drive the floor away on every step.',
+  },
+];
+
+const grouped = ['Squat','Press','Pull','Hinge','Accessory','Conditioning'].map((cat) => ({
+  cat,
+  lifts: lifts.filter((l) => l.category === cat),
+}));
+
+const total = lifts.length;
+const pageDescription =
+  'A reference library for the lifts that anchor a heavy training week — setup, execution, common faults, and how to program each one. Built for the lifter who already owns the basics and is sharpening them.';
+---
+
+<StackLayout
+  title="Exercise Library — Stack"
+  description={pageDescription}
+  active="exercises"
+>
+
+  {/* HERO */}
+  <section class="block-border-b bg-stack-bone">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-14 sm:py-20 grid lg:grid-cols-12 gap-8 items-end">
+      <div class="lg:col-span-7">
+        <p class="tag text-stack-red">/00 — THE LIBRARY</p>
+        <h1 class="display text-[12vw] sm:text-[9vw] lg:text-[7.5rem] xl:text-[9rem] mt-3 leading-[0.88]">
+          THE<br/>
+          <span class="text-stack-red">LIFTS.</span>
+        </h1>
+        <p class="mt-6 max-w-xl text-base sm:text-lg text-stack-graphite">
+          {total} movements that earn their spot in a heavy training week. Not a complete
+          encyclopedia &mdash; an opinionated reference for the lifts Stack programs around.
+          Setup, execution, common faults, and how to load each one over a training cycle.
+        </p>
+        <p class="mt-4 max-w-xl text-base text-stack-graphite">
+          If a lift is not on this page, it is not because it doesn't work. It is because
+          something else on this page does the same job with less interference. The goal is
+          a short list you can master, not a long list you can sample.
+        </p>
+      </div>
+
+      <aside class="lg:col-span-5">
+        <div class="bg-stack-ink text-stack-bone block-border p-6">
+          <p class="tag text-stack-red-bright">SKIP TO</p>
+          <ul class="mt-3 space-y-2">
+            {grouped.map((g) => (
+              <li class="flex items-baseline justify-between gap-3">
+                <a href={`#${g.cat.toLowerCase()}`} class="display text-2xl hover:text-stack-red-bright transition-colors">
+                  {g.cat.toUpperCase()}
+                </a>
+                <span class="tag text-stack-rebar-soft">{g.lifts.length} LIFT{g.lifts.length === 1 ? '' : 'S'}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </aside>
+    </div>
+  </section>
+
+  {/* MARQUEE */}
+  <section aria-hidden="true" class="bg-stack-red text-stack-bone overflow-hidden">
+    <div class="flex whitespace-nowrap py-3 gap-8 display text-lg">
+      {Array.from({ length: 2 }).map(() => (
+        <span class="flex gap-8 px-4">
+          <span>SETUP</span><span>&middot;</span>
+          <span>EXECUTE</span><span>&middot;</span>
+          <span>BRACE</span><span>&middot;</span>
+          <span>FINISH</span><span>&middot;</span>
+          <span>LOG</span><span>&middot;</span>
+          <span>REPEAT</span><span>&middot;</span>
+        </span>
+      ))}
+    </div>
+  </section>
+
+  {/* LIBRARY */}
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-14 space-y-16">
+    {grouped.map((group) => (
+      <section id={group.cat.toLowerCase()} class="scroll-mt-20">
+        <header class="flex items-end justify-between flex-wrap gap-3 mb-8 pb-4 border-b-2 border-stack-ink">
+          <h2 class="display text-5xl sm:text-7xl text-stack-ink">{group.cat.toUpperCase()}.</h2>
+          <p class="tag text-stack-concrete">{group.lifts.length} {group.lifts.length === 1 ? 'movement' : 'movements'}</p>
+        </header>
+
+        <div class="grid gap-6 lg:grid-cols-2">
+          {group.lifts.map((lift) => (
+            <article id={lift.slug} class="bg-stack-paper block-border p-6 scroll-mt-20">
+
+              <header class="flex items-baseline justify-between gap-3 pb-3 border-b-2 border-stack-ink/20">
+                <h3 class="display text-2xl sm:text-3xl text-stack-ink">{lift.name}</h3>
+                <p class="tag text-stack-red">{lift.category.toUpperCase()}</p>
+              </header>
+
+              <p class="tag text-stack-concrete mt-4">PRIMARY MOVERS</p>
+              <p class="mt-1 font-mono text-sm text-stack-ink">{lift.primary}</p>
+
+              <p class="tag text-stack-concrete mt-5">SETUP</p>
+              <p class="mt-1 text-stack-graphite leading-relaxed text-[0.95rem]">{lift.setup}</p>
+
+              <p class="tag text-stack-concrete mt-5">EXECUTION</p>
+              <p class="mt-1 text-stack-graphite leading-relaxed text-[0.95rem]">{lift.execution}</p>
+
+              <p class="tag text-stack-concrete mt-5">COMMON FAULTS</p>
+              <ul class="mt-1 space-y-1 text-stack-graphite text-[0.95rem]">
+                {lift.faults.map((fault) => (
+                  <li class="flex gap-2">
+                    <span class="text-stack-red display flex-shrink-0" aria-hidden="true">×</span>
+                    <span>{fault}</span>
+                  </li>
+                ))}
+              </ul>
+
+              <p class="tag text-stack-concrete mt-5">PROGRAMMING</p>
+              <p class="mt-1 text-stack-graphite leading-relaxed text-[0.95rem]">{lift.programming}</p>
+
+              <div class="mt-6 bg-stack-ink text-stack-bone p-4 border-l-4 border-stack-red">
+                <p class="tag text-stack-red-bright">CUE</p>
+                <p class="mt-1 display text-lg">&ldquo;{lift.cue}&rdquo;</p>
+              </div>
+            </article>
+          ))}
+        </div>
+      </section>
+    ))}
+  </div>
+
+  {/* STANDING NOTE */}
+  <section class="block-border-t bg-stack-graphite text-stack-bone">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 grid lg:grid-cols-2 gap-10 items-start">
+      <div>
+        <p class="tag text-stack-red-bright">/STANDING NOTE</p>
+        <h2 class="display text-4xl sm:text-5xl mt-2 text-stack-bone">On this library.</h2>
+        <p class="mt-5 text-stack-rebar-soft leading-relaxed">
+          Every lift on this page has earned three things: a clear primary movement pattern,
+          a reliable carry-over to the others on the list, and a recovery profile that
+          allows it to be trained heavy more than once a year. That is a higher bar than
+          most lift libraries clear, and it is the reason this one is short.
+        </p>
+        <p class="mt-4 text-stack-rebar-soft leading-relaxed">
+          A movement gets cut when a simpler one does the same job. Goblet squats build the
+          pattern, then the back squat takes over. Cable rows can be replaced by chest-supported
+          rows the day a bench is available. The library is built like the rest of Stack &mdash;
+          do less, with more weight, more often.
+        </p>
+      </div>
+      <div class="bg-stack-ink border-2 border-stack-concrete/40 p-6">
+        <p class="tag text-stack-red-bright">HOW TO USE THIS PAGE</p>
+        <ol class="mt-4 space-y-3 text-sm text-stack-rebar-soft list-none pl-0">
+          <li class="flex gap-3"><span class="display text-stack-red-bright">01</span><span>Pick a category and read every entry in it once, slowly.</span></li>
+          <li class="flex gap-3"><span class="display text-stack-red-bright">02</span><span>Identify the one lift in that category you currently program.</span></li>
+          <li class="flex gap-3"><span class="display text-stack-red-bright">03</span><span>Compare your last working set to the execution paragraph. Be honest.</span></li>
+          <li class="flex gap-3"><span class="display text-stack-red-bright">04</span><span>If the faults list reads like your warm-up video, that is your next training block.</span></li>
+          <li class="flex gap-3"><span class="display text-stack-red-bright">05</span><span>Log the changes. Show up next session. Add weight when the numbers earn it.</span></li>
+        </ol>
+      </div>
+    </div>
+  </section>
+
+</StackLayout>
+</content>
+</invoke>

@@ -4,7 +4,7 @@ import '../styles/global.css';
 export interface Props {
   title: string;
   description: string;
-  active?: 'home' | 'programs' | 'workout' | 'about';
+  active?: 'home' | 'programs' | 'workout' | 'exercises' | 'about';
   image?: string;
 }
 
@@ -16,6 +16,7 @@ const nav = [
   { href: '/', label: 'Home', key: 'home' },
   { href: '/programs', label: 'Programs', key: 'programs' },
   { href: '/workout', label: 'Workout', key: 'workout' },
+  { href: '/exercises', label: 'Exercises', key: 'exercises' },
   { href: '/about', label: 'About', key: 'about' },
 ];
 ---
